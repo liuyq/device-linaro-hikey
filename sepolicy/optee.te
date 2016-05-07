@@ -1,0 +1,12 @@
+type optee , domain;
+type optee_exec, exec_type, file_type;
+
+init_daemon_domain(optee)
+
+allow optee optee_dev:chr_file rw_file_perms;
+allow optee optee_data_file:dir create_dir_perms;
+allow optee optee_data_file:file { link create_file_perms };
+
+#avc: denied { dac_override } for pid=1721 comm="tee-supplicant" capability=1 scontext=u:r:optee:s0 tcontext=u:r:optee:s0 tclass=capability permissive=1
+allow optee self:capability { dac_override };
+#permissive optee;
